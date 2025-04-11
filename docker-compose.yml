@@ -1,0 +1,12 @@
+# This is a Docker Compose file for the yt-downloader API.
+# It defines a single service that runs the yt-downloader API in a container.
+
+services:
+  yt-downloader:
+    build: .
+    container_name: yt-downloader-api
+    ports:
+      - "80:3000"              # expose 3000 inside container to port 80 on host
+    volumes:
+      - ./downloads:/app/downloads  # persist downloaded files
+    restart: always
