@@ -3,10 +3,10 @@ FROM node:22
 # Install dependencies for yt-dlp and ffmpeg
 RUN set -xe \
     && apt-get update -y \
-    && apt-get install -y pipx \
+    && apt-get install -y python3-pip3\
     && apt-get install -y ffmpeg
-RUN pipx install yt-dlp
-
+RUN pip3 install --upgrade pip
+RUN pip3 install yt-dlp
 # Set working directory
 WORKDIR /app
 
