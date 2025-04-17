@@ -1,20 +1,17 @@
-FROM node:22
+FROM node:20
 
-# Install dependencies for yt-dlp and ffmpeg
-RUN set -xe \
-    && apt-get update -y \
-    && apt-get install -y python3-pip3\
-    && apt-get install -y ffmpeg
-RUN pip3 install --upgrade pip
+# Install Python, pip, ffmpeg, yt-dlp
+RUN apt update && apt install -y python3 python3-pip ffmpeg
 RUN pip3 install yt-dlp
-# Set working directory
+
 WORKDIR /app
 
-# Copy files and install dependencies
-COPY . .
+COPY package*.json ./
 RUN npm install
 
-# Expose API port
+COPY . .
+RUN npm run build
+
 EXPOSE 3000
 
-CMD ["npm", "run", "start"]
+CMD ["node", "dist/main"]

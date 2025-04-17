@@ -15,20 +15,19 @@ export class DownloadController {
 
     const fileName =
       type === 'audio' ? `audio-${Date.now()}.mp3` : `video-${Date.now()}.mp4`;
-    const filePath = path.join(
-      __dirname,
-      '..',
-      '..',
-      '..',
-      'downloads',
-      fileName,
-    );
+    // const filePath = path.join(
+    //   __dirname,
+    //   '..',
+    //   '..',
+    //   '..',
+    //   'downloads',
+    //   fileName,
+    // );
+    const filePath = path.join('/tmp', fileName);
 
-    // Make sure path separators are escaped properly for shell
-    const normalizedFilePath = filePath.replace(/\\/g, '/');
     const format =
       type === 'audio' ? '140/251/250/249' : '22/136+140/135+140/18/17';
-    const command = `yt-dlp --cookies cookies.txt -f ${format} -o "${normalizedFilePath}" "${url}"`;
+    const command = `yt-dlp --cookies cookies.txt -f ${format} -o "${filePath}" "${url}"`;
 
     exec(command, (error) => {
       if (error || !fs.existsSync(filePath)) {
